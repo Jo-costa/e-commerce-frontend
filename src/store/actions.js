@@ -87,7 +87,6 @@ export function removeFromCart({
 
     const user_id = state.user.data.id
     const product_id = product.product_id
-    console.log(product_id);
 
     const updateDB = {
         cart: cart,
@@ -115,16 +114,52 @@ export function removeFromCartServer({
     })
 }
 
+
+export function decreaseQty({
+    state
+}, product) {
+
+    const products = state.products
+    const cart = state.cart
+
+    let producStock = products.find((item) => item.id === product.product_id)
+
+    //remove item from cart if qty === 1
+    if (product.quantity <= 1) {
+
+        cart = cart.filter(item => !(item.product_id === product.product_id))
+        producStock.Inventory.stock++;
+
+    } else {
+        product.quantity--;
+        producStock.Inventory.stock++;
+    }
+
+
+    const user_id = state.user.data.id
+    const product_id = product.product_id
+    const quantity = product.quantity
+    const stock = producStock.Inventory.stock
+
+    const updateDB = {
+        user_id: user_id,
+        product_id: product_id,
+        quantity: quantity,
+        stock: stock
+    }
+
+
+
+    return updateDB
+}
+
 export function increaseQty({
     state
 }, product) {
 
     const products = state.products
     const cart = state.cart
-    console.log(product.quantity);
-    // console.log(cart[0].quantity);
-    // console.log(cart);
-    //find the product stock in the products array
+
     let producStock = products.find((item) => item.id === product.product_id)
 
     if (producStock.Inventory.stock > 0) {
@@ -145,7 +180,6 @@ export function increaseQty({
         stock: stock
     }
 
-    console.log(updateDB);
 
 
     return updateDB
@@ -154,13 +188,14 @@ export function increaseQty({
 export function increaseQtyServer({
     state
 }, product) {
-    return axiosClient.post('/increaseQty', product).then(({
-        response
-    }) => {
-        console.log("remove: ", response);
-        commit('setCart', response.cart)
-        return product
-    })
+    return axiosClient.post('/increaseQty', product)
+        .then(({
+            data
+        }) => {
+            console.log("remove: ", data);
+            commit('setCart', data.cart)
+            return product
+        })
 }
 
 export function login({
