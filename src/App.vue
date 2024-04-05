@@ -1,7 +1,7 @@
 <template>
   <Navbar v-if="hideNavAndFooter" />
-  <router-view @add-to-cart="addToCart" @remove-from-cart="removeFromCart" @increase-qty="increaseQty"
-    @toggle-favourite="toggleFav" :cart="cart" :fav="fav" class="flex-1"></router-view>
+  <router-view @add-to-cart="addToCart" @remove-from-cart="removeFromCart" @decrease-qty="decreaseQty"
+    @increase-qty="increaseQty" @toggle-favourite="toggleFav" :cart="cart" :fav="fav" class="flex-1"></router-view>
   <!-- :cartItemCount="cartItemCount" -->
   <Footer v-if="hideNavAndFooter" class="m-auto" />
 
@@ -64,6 +64,16 @@ const removeFromCart = (product) => {
 const increaseQty = (product) => {
   store.dispatch('increaseQty', product).then((response) => {
     store.dispatch('increaseQtyServer', response)
+      .then(() => {
+
+      })
+  })
+}
+const decreaseQty = (product) => {
+  store.dispatch('decreaseQty', product).then((response) => {
+
+    console.log(product);
+    store.dispatch('decreaseQtyServer', response)
       .then(() => {
 
       })

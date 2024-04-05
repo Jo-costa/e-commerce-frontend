@@ -119,17 +119,23 @@ export function decreaseQty({
     state
 }, product) {
 
+    console.log("asd");
     const products = state.products
-    const cart = state.cart
+    let cart = state.cart
 
     let producStock = products.find((item) => item.id === product.product_id)
 
     //remove item from cart if qty === 1
-    if (product.quantity <= 1) {
+    if (product.quantity <= 0) {
 
+        console.log("in");
+        product.quantity--;
         cart = cart.filter(item => !(item.product_id === product.product_id))
+
+
         producStock.Inventory.stock++;
 
+        console.log(cart);;
     } else {
         product.quantity--;
         producStock.Inventory.stock++;
@@ -151,6 +157,19 @@ export function decreaseQty({
 
 
     return updateDB
+}
+
+export function decreaseQtyServer({
+    commit
+}, product) {
+    return axiosClient.post('/decreaseQty', product)
+        .then(({
+            data
+        }) => {
+            console.log("remove: ", data);
+            commit('setCart', data.cart)
+            return product
+        })
 }
 
 export function increaseQty({
@@ -186,7 +205,7 @@ export function increaseQty({
 }
 
 export function increaseQtyServer({
-    state
+    commit
 }, product) {
     return axiosClient.post('/increaseQty', product)
         .then(({

@@ -17,7 +17,8 @@
                         </div>
                     </div>
                     <div class="flex">
-                        <button type="button" class="bg-transparent py-2 font-semibold text-[#333]">
+                        <button @click="decreaseItemQty(product)" type="button"
+                            class="bg-transparent py-2 font-semibold text-[#333]">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-current" viewBox="0 0 124 124">
                                 <path
                                     d="M112 50H12C5.4 50 0 55.4 0 62s5.4 12 12 12h100c6.6 0 12-5.4 12-12s-5.4-12-12-12z"
@@ -106,7 +107,7 @@ const props = defineProps({
     cart: Array,
     toggleFavourite: Function
 })
-const emit = defineEmits(['remove-from-cart', 'increase-qty'])
+const emit = defineEmits(['remove-from-cart', 'increase-qty', 'decrease-qty'])
 const use_Store = useStore()
 const cart = store.state.cart
 const products = store.state.products
@@ -121,6 +122,9 @@ const removeItemFromCart = (product) => {
 }
 const increaseItemQty = (product) => {
     emit('increase-qty', product)
+}
+const decreaseItemQty = (product) => {
+    emit('decrease-qty', product)
 }
 
 </script>
