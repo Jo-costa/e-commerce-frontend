@@ -23,13 +23,15 @@ export function setToken(state, token) {
 }
 
 
-export function addToWishList(state, productID) {
-    if (!state.wishlist.includes(productID)) {
-        state.wishlist.push(productID)
+export function addToWishList(state, product_id) {
+    if (!state.wishlist.includes(product_id)) {
+        state.wishlist.push(product_id)
     }
 }
-export function removeFromWishList(state, productID) {
-    const index = state.wishlist.findIndex(id => id === productID)
+
+export function removeFromWishList(state, product_id) {
+
+    const index = state.wishlist.findIndex(id => id === product_id)
     if (index !== -1) {
         state.wishlist.splice(index, 1)
     }

@@ -44,15 +44,19 @@
                         </router-link>
 
 
-                        <MenuItem v-slot="{ active }">
-                        <button :class="[
+                        <router-link :to="{ name: 'Wishlist' }">
+
+                            <MenuItem v-slot="{ active }">
+                            <button :class="[
                             active ? 'bg-teal-500 text-white' : 'text-gray-900',
                             'group flex w-full items-center rounded-md px-2 py-2 text-sm transition-all',
                         ]">
-                            <HeartIcon class="w-6 h-6 " />
-                            Wish List
-                        </button>
-                        </MenuItem>
+                                <HeartIcon class="w-6 h-6 " />
+                                Wish List
+                            </button>
+                            </MenuItem>
+                        </router-link>
+
                         <MenuItem v-slot="{ active }">
                         <button @click="logout" :class="[
                             active ? 'bg-teal-500 text-white' : 'text-gray-900',
