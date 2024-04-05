@@ -24,13 +24,16 @@ const hideNavAndFooter = computed(() => {
   return routeName !== 'SignupVerify' && routeName !== 'pagenotfound' && routeName !== 'AccountVerified'
 })
 
-const toggleFav = (productID) => {
-  if (fav.value.includes(productID)) {
-    fav.value = fav.value.filter(id => id !== productID)
-    store.commit('removeFromWishList', productID)
+
+const toggleFav = (product_id) => {
+  if (fav.value.includes(product_id)) {
+    fav.value = fav.value.filter(id => id !== product_id)
+    store.commit('removeFromWishList', product_id)
+
   } else {
-    fav.value.push(productID)
-    store.commit('addToWishList', productID)
+    fav.value.push(product_id)
+    store.commit('addToWishList', product_id)
+
   }
 }
 
