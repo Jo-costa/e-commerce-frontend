@@ -14,6 +14,7 @@ import Security from '../views/SecurityDetails.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import ProductPage from '../views/ProductPage.vue'
 import Basket from '../views/Basket.vue'
+import Wishlist from '../views/Wishlist.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 import store from '../store/store'
 
@@ -39,6 +40,14 @@ const routes = [{
         component: Basket,
         meta: {
             auth: false
+        }
+    },
+    {
+        path: '/wishlist',
+        name: 'Wishlist',
+        component: Wishlist,
+        meta: {
+            auth: true
         }
     },
     // {
