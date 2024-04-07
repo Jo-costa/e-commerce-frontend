@@ -53,6 +53,7 @@ const props = defineProps({
     cart: Array,
     toggleFavourite: Function
 })
+const fav = store.state.wishlist
 const emit = defineEmits(['toggle-favourite', 'add-to-cart'])
 const toggleFavourite = (productID) => {
     emit('toggle-favourite', productID)

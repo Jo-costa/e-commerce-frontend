@@ -30,7 +30,6 @@ export function addToCart({
         cart[productInCart].quantity++
         product.Inventory.stock--
     } else {
-        console.log("adding:", product.Images[0].img_url);
         cart.push({
             product_id: product.id,
             quantity: 1,
@@ -54,8 +53,6 @@ export function addToCart({
 
     return sendData
 }
-
-
 
 export function addToCartServer({
     commit
@@ -126,16 +123,16 @@ export function decreaseQty({
     let producStock = products.find((item) => item.id === product.product_id)
 
     //remove item from cart if qty === 1
-    if (product.quantity <= 0) {
+
+    console.log("qty: ", product.quantity);
+    if (product.quantity < 1) {
 
         console.log("in");
         product.quantity--;
         cart = cart.filter(item => !(item.product_id === product.product_id))
 
-
         producStock.Inventory.stock++;
 
-        console.log(cart);;
     } else {
         product.quantity--;
         producStock.Inventory.stock++;
@@ -153,6 +150,7 @@ export function decreaseQty({
         quantity: quantity,
         stock: stock
     }
+
 
 
 
@@ -217,7 +215,39 @@ export function increaseQtyServer({
         })
 }
 
+export function addToWishListServer({
+    commit
+}, product) {
+    return axiosClient.post('/addToWishlist', product)
+        .then(({
+            data
+        }) => {
 
+            const wishlist = []
+            data.forEach(item => {
+                wishlist.push(item.id)
+            })
+            console.log(data);
+            commit('setWishlist', wishlist)
+        })
+}
+
+export function removeFromWishListServer({
+    commit
+}, product) {
+    return axiosClient.post('/removeFromWishlist', product)
+        .then(({
+            data
+        }) => {
+
+            const wishlist = []
+            data.forEach(item => {
+                wishlist.push(item.id)
+            })
+            console.log(data);
+            commit('setWishlist', wishlist)
+        })
+}
 export function login({
     commit
 }, data) {

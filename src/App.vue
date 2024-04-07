@@ -27,12 +27,16 @@ const hideNavAndFooter = computed(() => {
 
 const toggleFav = (product_id) => {
   if (fav.value.includes(product_id)) {
+    const productDetails = { 'product_id': product_id, 'user_id': store.state.user.data.id }
     fav.value = fav.value.filter(id => id !== product_id)
     store.commit('removeFromWishList', product_id)
+    store.dispatch('removeFromWishListServer', productDetails)
 
   } else {
+    const productDetails = { 'product_id': product_id, 'user_id': store.state.user.data.id }
     fav.value.push(product_id)
     store.commit('addToWishList', product_id)
+    store.dispatch('addToWishListServer', productDetails)
 
   }
 }

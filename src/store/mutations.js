@@ -22,6 +22,9 @@ export function setToken(state, token) {
     }
 }
 
+export function setWishlist(state, wishlist) {
+    state.wishlist = wishlist
+}
 
 export function addToWishList(state, product_id) {
     if (!state.wishlist.includes(product_id)) {

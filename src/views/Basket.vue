@@ -3,9 +3,9 @@
 
     <div class="font-[sans-serif] bg-gray-100">
         <div class=" grid lg:grid-cols-3 gap-12 p-20" v-if="cart.length > 0">
-            <div class="lg:col-span-2 divide-y w-full h-auto" v-for="(product, index) in  cart " :key="index">
-                <div class="grid md:grid-cols-4 items-center gap-8 py-6 bg-white p-2">
+            <div class="lg:col-span-2 divide-y w-full h-auto" v-for="(product, index) in cart " :key="index">
 
+                <div class="grid md:grid-cols-4 items-center gap-8 py-6 bg-white p-2">
                     <div class="md:col-span-2 flex items-center gap-6">
                         <div class="w-32 h-22 shrink-0 shadow-[0_0px_4px_0px_rgba(6,81,237,0.2)] p-4">
                             <img :src="product.img_url" class="w-full h-full object-contain rounded-md" />
@@ -109,7 +109,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['remove-from-cart', 'increase-qty', 'decrease-qty'])
 const use_Store = useStore()
-const cart = store.state.cart
+const cart = ref(store.state.cart)
 const products = store.state.products
 const empty = cart.length > 0
 

@@ -65,22 +65,14 @@ const props = defineProps({
     fav: Array,
     toggleFavourite: Function
 })
-const emit = defineEmits(['remove-from-cart', 'increase-qty', 'decrease-qty', 'toggle-favourite'])
+const emit = defineEmits(['toggle-favourite'])
 const use_Store = useStore()
 const cart = store.state.cart
 const products = store.state.products
 const empty = cart.length > 0
 
 
-const removeItemFromCart = (product) => {
-    emit('remove-from-cart', product)
-}
-const increaseItemQty = (product) => {
-    emit('increase-qty', product)
-}
-const decreaseItemQty = (product) => {
-    emit('decrease-qty', product)
-}
+
 const toggleFavourite = (product) => {
     emit('toggle-favourite', product)
 }

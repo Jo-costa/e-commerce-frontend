@@ -20,9 +20,9 @@
                             <MenuItem v-slot="{ active }">
 
                             <button :class="[
-                            active ? 'bg-teal-500 text-white' : 'text-gray-900',
-                            'group flex w-full items-center rounded-md px-2 py-2 text-sm transition-all',
-                        ]">
+                                active ? 'bg-teal-500 text-white' : 'text-gray-900',
+                                'group flex w-full items-center rounded-md px-2 py-2 text-sm transition-all',
+                            ]">
                                 <UserIcon class="w-6 h-6 " />
                                 Profile
                             </button>
@@ -34,9 +34,9 @@
                             <MenuItem v-slot="{ active }">
 
                             <button :class="[
-                            active ? 'bg-teal-500 text-white' : 'text-gray-900',
-                            'group flex w-full items-center rounded-md px-2 py-2 text-sm transition-all',
-                        ]">
+                                active ? 'bg-teal-500 text-white' : 'text-gray-900',
+                                'group flex w-full items-center rounded-md px-2 py-2 text-sm transition-all',
+                            ]">
                                 <ListBulletIcon class="w-6 h-6 " />
                                 View Orders
                             </button>
@@ -48,9 +48,9 @@
 
                             <MenuItem v-slot="{ active }">
                             <button :class="[
-                            active ? 'bg-teal-500 text-white' : 'text-gray-900',
-                            'group flex w-full items-center rounded-md px-2 py-2 text-sm transition-all',
-                        ]">
+                                active ? 'bg-teal-500 text-white' : 'text-gray-900',
+                                'group flex w-full items-center rounded-md px-2 py-2 text-sm transition-all',
+                            ]">
                                 <HeartIcon class="w-6 h-6 " />
                                 Wish List
                             </button>
@@ -62,7 +62,7 @@
                             active ? 'bg-teal-500 text-white' : 'text-gray-900',
                             'group flex w-full items-center rounded-md px-2 py-2 text-sm transition-all',
                         ]">
-                            <ArrowLeftOnRectangleIcon class="w-6 h-6 " />
+                            <ArrowLeftOnRectangleIcon class="w-6 h-6" />
                             Logout
                         </button>
                         </MenuItem>
@@ -79,10 +79,12 @@
 <script setup>
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import { ref } from 'vue'
 import { UserIcon, ArrowLeftOnRectangleIcon, ListBulletIcon, HeartIcon } from '@heroicons/vue/20/solid'
 import store from '../store/store';
 import router from '../router/router';
 // const name = store.state.user.data.name
+
 
 const user_id = store.state.user.data.id ? store.state.user.data.id : null;
 const token = store.state.user.token;
