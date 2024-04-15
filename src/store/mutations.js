@@ -2,6 +2,13 @@ export function setProds(state, products) {
     state.products = products
 }
 
+export function setUsername(state, username) {
+    state.user.data.username = username
+}
+export function setEmail(state, email) {
+    state.user.data.email = email
+}
+
 export function setCart(state, cart) {
     state.cart = cart
 }

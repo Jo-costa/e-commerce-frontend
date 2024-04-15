@@ -14,8 +14,9 @@
                 </div>
                 <div class="hidden flex-row justify-between items-center" :class="{ 'show': !editName }">
 
-                    <input type="text" name="name" id="" placeholder="name" class="border-2 p-2 rounded-lg">
-                    <button
+                    <input type="text" v-model="newName" name="name" id="username" placeholder="name"
+                        class="border-2 p-2 rounded-lg" required>
+                    <button @click="updateUserName"
                         class="bg-teal-500 text-white hover:bg-teal-700 rounded border-2 p-4 w-30 h-8 flex justify-center items-center">Update</button>
                 </div>
                 <div class="flex flex-row justify-between items-center pb-10 pt-10">
@@ -28,8 +29,9 @@
                 </div>
                 <div class="hidden flex-row justify-between items-center" :class="{ 'show': !editEmail }">
 
-                    <input type="text" name="email" id="" placeholder="email" class="border-2 p-2 rounded-lg">
-                    <button
+                    <input type="email" v-model="newEmail" name="email" id="email" placeholder="email"
+                        class="border-2 p-2 rounded-lg" required>
+                    <button @click="updateUserEmail"
                         class="bg-teal-500 text-white hover:bg-teal-700 rounded border-2 p-4 w-30 h-8 flex justify-center items-center">Update</button>
                 </div>
 
@@ -46,11 +48,13 @@
                     <div class="flex flex-col w-full">
 
 
-                        <input type="password" name="currentPass" id="" placeholder="Current Password"
-                            class="border-2 p-2 rounded-lg w-full">
-                        <input type="password" name="newPass" id="" placeholder="New Password"
-                            class="border-2 p-2 rounded-lg w-full">
-                        <button
+                        <span v-if="invalidPassword" class="text-red-500 mb-2">Incorrect Password</span>
+                        <input type="password" v-model="currentPass" name="currentPass" id="currentPass"
+                            placeholder="Current Password" class="border-2 mb-2 p-2 rounded-lg w-full"
+                            :class="{ 'invalid': invalidPassword }" required>
+                        <input type="password" v-model="newPass" name="newPass" id="newPass" placeholder="New Password"
+                            class="border-2 p-2 rounded-lg w-full" required>
+                        <button @click="updateUserPass"
                             class="bg-teal-500 text-white hover:bg-teal-700 rounded border-2 p-4 w-28  h-8 mt-2 flex justify-center items-center">Update</button>
                     </div>
 
@@ -68,23 +72,43 @@
 
 <script setup>
 import store from '../store/store';
-import { ref } from 'vue';
+import { ref, defineEmits, defineProps } from 'vue';
+
+const emit = defineEmits(['update-name', 'update-email', 'update-pass'])
+const props = defineProps({
+    invalidPassword: Boolean
+})
 const username = store.state.user.data.username
 const email = store.state.user.data.email
+
 let editName = ref(true)
 let editEmail = ref(true)
 let editPass = ref(true)
 
+let newName = '';
+let newEmail = '';
+let currentPass = '';
+let newPass = '';
+
+
 function displayNameInput() {
     editName.value = !editName.value;
-    console.log('clicked');
 }
 function displayEmailInput() {
     editEmail.value = !editEmail.value;
-    console.log('clicked');
 }
 function displayPassInput() {
     editPass.value = !editPass.value;
+}
+
+const updateUserName = () => {
+    emit('update-name', newName)
+}
+const updateUserEmail = () => {
+    emit('update-email', newEmail)
+}
+const updateUserPass = () => {
+    emit('update-pass', currentPass, newPass)
 }
 
 </script>
@@ -92,5 +116,11 @@ function displayPassInput() {
 <style scoped>
 .show {
     display: flex;
+}
+
+.invalid {
+    background-color: rgb(187, 139, 139);
+    border: none;
+    outline: 2px solid red;
 }
 </style>

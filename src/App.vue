@@ -1,7 +1,9 @@
 <template>
   <Navbar v-if="hideNavAndFooter" />
   <router-view @add-to-cart="addToCart" @remove-from-cart="removeFromCart" @decrease-qty="decreaseQty"
-    @increase-qty="increaseQty" @toggle-favourite="toggleFav" :cart="cart" :fav="fav" class="flex-1"></router-view>
+    @increase-qty="increaseQty" @toggle-favourite="toggleFav" :cart="cart" :fav="fav" @update-name="updateName"
+    @update-email="updateEmail" @update-pass="updatePass" :invalidPassword="invalidPassword"
+    class="flex-1"></router-view>
   <!-- :cartItemCount="cartItemCount" -->
   <Footer v-if="hideNavAndFooter" class="m-auto" />
 
@@ -18,6 +20,8 @@ import { computed, ref } from 'vue'
 
 const fav = ref(store.state.wishlist)
 const cart = ref(store.state.cart)
+const invalidPassword = ref(false)
+console.log(typeof (invalidPassword));
 
 const hideNavAndFooter = computed(() => {
   const routeName = router.currentRoute.value.name
@@ -62,7 +66,6 @@ const removeFromCart = (product) => {
 
       store.dispatch('removeFromCartServer', response)
         .then(() => {
-          console.log("removed!");
           window.location.reload()
         })
     })
@@ -85,6 +88,39 @@ const decreaseQty = (product) => {
 
       })
   })
+}
+
+const updateName = (username) => {
+  const userDetails = { 'user_id': store.state.user.data.id, 'newUsername': username }
+  store.dispatch('updateName', userDetails)
+    .then((response) => {
+
+      window.location.reload()
+    })
+}
+const updateEmail = (email) => {
+  const userDetails = { 'user_id': store.state.user.data.id, 'email': email }
+
+  store.dispatch('updateEmail', userDetails)
+    .then((response) => {
+
+      window.location.reload()
+    })
+}
+
+const updatePass = (currentPass, newPass) => {
+  const userDetails = { 'user_id': store.state.user.data.id, 'newPass': newPass, 'currentPass': currentPass }
+
+  store.dispatch('updatePass', userDetails)
+    .then((response) => {
+
+      if (response.message === 'Incorrect password') {
+        invalidPassword.value = true
+        return
+      }
+
+      window.location.reload()
+    })
 }
 
 // const cartItemCount = () => {

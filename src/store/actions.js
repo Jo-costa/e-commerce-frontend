@@ -303,6 +303,40 @@ export function logout({
 }
 
 
+export function updateName({
+    commit
+}, data) {
+    return axiosClient.post('/update-name', data).then(({
+        data
+    }) => {
+
+        console.log(data.username);
+        commit('setUsername', data.username)
+        return data
+    })
+}
+export function updateEmail({
+    commit
+}, data) {
+    return axiosClient.post('/update-email', data).then(({
+        data
+    }) => {
+
+        commit('setEmail', data.email)
+        return data
+    })
+}
+export function updatePass({
+    commit
+}, data) {
+    return axiosClient.post('/update-pass', data).then(({
+        data
+    }) => {
+
+        return data
+    })
+}
+
 
 // export function getAdmin({
 //     commit
