@@ -6,6 +6,7 @@
                 <div v-for="product in products" :key="product.id"
                     class="bg-white rounded-2xl p-3   transition-all relative">
 
+
                     <div @click="toggleFavourite(product.id)"
                         class="bg-gray-100  w-10 h-10 flex hover:-translate-y-0.5 items-center justify-center rounded-full cursor-pointer absolute top-4 right-4"
                         :class="{ 'fill-gray-800': !props.fav.includes(product.id), 'fill-red': props.fav.includes(product.id) }">

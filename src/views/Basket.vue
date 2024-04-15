@@ -91,10 +91,10 @@
                 </div>
             </div>
         </div>
-        <div v-else class="bg-white w-1/2 h-[200px] rounded flex justify-center m-auto mt-12 items-center">
+        <div v-else class="bg-white w-1/2 lg:h-[200px] rounded flex justify-center m-auto mt-12 items-center">
             <ul class="flex flex-col justify-center">
                 <li class="flex justify-center">
-                    <h1 class="text-3xl">Empty Basket</h1>
+                    <h1 class="lg:text-3xl md:text-lg">Empty Basket</h1>
                 </li>
                 <li class="flex justify-center "><router-link :to="{ name: 'Home' }">Continue
                         Shopping</router-link></li>

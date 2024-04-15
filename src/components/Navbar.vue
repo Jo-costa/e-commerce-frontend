@@ -1,12 +1,11 @@
 <template>
-    <header
-        class="relative p-4 flex shrink-0 bg-teal-700 text-white md:text-base lg:text-lg  justify-between items-center">
+    <header class="relative p-4 flex shrink-0 bg-teal-700 text-white   justify-between items-center ">
         <div class="p-2">
             <a href="/">DigitalDynasty</a>
         </div>
         <div class="w-full">
 
-            <form class="flex items-center max-w-sm mx-auto w-full">
+            <form class=" hideSearchBar flex items-center max-w-sm mx-auto w-full">
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -33,30 +32,39 @@
 
         </div>
 
-        <!-- <div
-            class="fixed flex justify-center top-12 right-0 bottom-0 transition-colors h-full  w-[150px] bg-teal-700 md:hidden">
-            <ul class="w-full flex flex-col md:flex z-50 p-4">
-                <li class="mb-2"><router-link :to="{ name: 'Home' }"
-                        class="hover:text-teal-300 transition-colors">Homse</router-link></li>
-                <ProductsDropdown class="hover:text-teal-300 transition-colors mb-2 z-50" />
-                <li class="mb-2"><a href="" class="flex items-center hover:text-teal-300 transition-colors">
-                        <ShoppingCartIcon class="w-5 h-5 mr-1" />
-                        Basket
-                    </a></li>
-                <MyAccountDropdown class="mb-2 hover:text-teal-300 transition-colors" />
-                <li><router-link :to="{ name: 'Login' }" href=""
-                        class="hover:text-teal-300 transition-colors">Login</router-link></li>
-                <li><router-link :to="{ name: 'Signup' }"
-                        class="hover:text-teal-300 transition-colors">Signup</router-link></li>
-            </ul>
-        </div> -->
+        <div class="bg-slate-300 w-full fixed z-50 	">
+            <div class="overflow-hidden hidden fixed justify-center rounded top-0 left-0 bottom-0 h-screen w-[150px]  bg-teal-500 z-50"
+                :class="{ 'displayMenuBar': !isMobileMenuOpen, 'menu-transition': !isMobileMenuOpen }">
 
-        <div class="flex w-1/2 justify-center items-center relative ">
+                <div clas>
+                    <div class="p-2 mt-2 text-xl">
+                        <a href="/">DigitalDynasty</a>
+                    </div>
+                    <ul class="w-full flex flex-col displayMenu p-4  ml-2">
+                        <router-link :to="{ name: 'Home' }"
+                            class="hover:text-teal-300 transition-colors p-2">Home</router-link>
 
-            <ul class="w-full justify-between hidden md:flex">
+                        <!-- <ProductsDropdown class="hover:text-teal-300 transition-colors" /> -->
+                        <router-link :to="{ name: 'Basket' }"
+                            class="relative flex  items-center hover:text-teal-300 transition-colors p-2">
+                            <span class="absolute left-0 top-0 text-xs">{{ cartItemCount }}</span>
+                            <ShoppingCartIcon class="w-5 h-5 mr-1 " />
+                            Basket
+                        </router-link>
+                        <MyAccountDropdown class="mb-2  hover:text-teal-300 transition-colors" />
+                        <router-link v-if="isAuth == null" :to="{ name: 'Login' }"
+                            class="text-white hover:text-teal-300 transition-colors mr-5 p-2">Login</router-link>
+                        <router-link v-if="isAuth == null" :to="{ name: 'Signup' }"
+                            class="text-white hover:text-teal-300 transition-colors p-2">Signup</router-link>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="flex w-1/2 justify-center items-center relative transition-colors	">
+
+            <ul class="w-full justify-between hideMenu">
                 <router-link :to="{ name: 'Home' }" class="hover:text-teal-300 transition-colors p-2">Home</router-link>
 
-                <!-- <ProductsDropdown class="hover:text-teal-300 transition-colors" /> -->
                 <router-link :to="{ name: 'Basket' }"
                     class="relative flex justify-center items-center hover:text-teal-300 transition-colors p-2">
                     <span class="absolute left-0 top-0 text-xs">{{ cartItemCount }}</span>
@@ -69,12 +77,9 @@
                     class="text-white hover:text-teal-300 transition-colors mr-5 p-2">Login</router-link>
                 <router-link v-if="isAuth == null" :to="{ name: 'Signup' }"
                     class="text-white hover:text-teal-300 transition-colors p-2">Signup</router-link>
-
             </ul>
-            <button @click="toggleMobileMenu"
-                class="block w-6 h-6 md:hidden cursor-pointer absolute right-0  bg-red-600">
+            <button @click="toggleMobileMenu" class=" hidden displayMenuBar w-6 h-6 cursor-pointer absolute right-0">
                 <Bars3Icon />
-
             </button>
         </div>
 
@@ -112,11 +117,12 @@ const cartItemCount = computed(() => {
 })
 
 
-let isMobileMenuOpen = ref(false)
+let isMobileMenuOpen = ref(true)
 
 function toggleMobileMenu() {
     //change the the state of the variable whenever the menu is clicked
     isMobileMenuOpen.value = !isMobileMenuOpen.value
+    console.log("clicked", isMobileMenuOpen.value);
 }
 
 
@@ -125,18 +131,7 @@ function toggleMobileMenu() {
 
 
 
-onMounted(() => {
-    // document.addEventListener('click', (e) => {
-    //     if (!e.target.closest('.mobile-menu') && isMobileMenuOpen.value) {
-    //         closeMobileMenu();
-    //     }
-    // })
 
-})
-
-// function closeMobileMenu() {
-//     isMobileMenuOpen.value = false
-// }
 function logout() {
     store.dispatch('logout')
         .then(() => {
@@ -145,4 +140,37 @@ function logout() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.menu-transition {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 100ms;
+}
+
+@media (max-width: 954px) {
+
+    .hideMenu {
+        display: none;
+    }
+
+
+}
+
+@media (max-width: 625px) {
+
+    .hideSearchBar {
+        display: none;
+    }
+
+
+}
+
+@media (max-width: 954px) {
+
+    .displayMenuBar {
+        display: flex;
+        transition: all 1s ease-out;
+
+    }
+}
+</style>

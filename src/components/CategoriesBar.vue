@@ -10,7 +10,7 @@
                 <li><a href="" class="rounded hover:bg-teal-400 p-2 transition-all">
                         Computing</a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="" class="rounded hover:bg-teal-400 p-2 transition-all">
                         Tablets</a>
                 </li>
@@ -19,11 +19,11 @@
                 </li>
                 <li><a href="" class="rounded hover:bg-teal-400 p-2 transition-all">
                         Cameras and
-                        Camcorders</a></li>
-
+                        Camcorders</a></li> -->
 
             </ul>
         </div>
+
 
 
     </div>

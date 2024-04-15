@@ -3,6 +3,7 @@
     <div class="font-[sans-serif] bg-gray-100  ">
         <div v-if="props.fav.length > 0" class="w-2/3 m-auto flex flex-col justify-center gap-12 p-20">
             <div class="lg:col-span-2 divide-y w-full h-auto" v-for="(product, index) in props.fav " :key="index">
+
                 <div class="grid md:grid-cols-4 items-center gap-8 py-6 bg-white p-2 relative">
                     <div class="md:col-span-2 flex items-center gap-6">
                         <router-link :to="'/product' + product">
@@ -78,6 +79,7 @@ const toggleFavourite = (product) => {
 }
 
 function getProductsDetails(products, product) {
+    console.log(products);
     return products.find(item => item.id === product)
 }
 
