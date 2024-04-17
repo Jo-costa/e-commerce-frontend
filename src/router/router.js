@@ -11,6 +11,8 @@ import Profile from '../views/Profile.vue'
 import Orders from '../views/ViewOrders.vue'
 // import Example from '../views/Example.vue'
 import Security from '../views/SecurityDetails.vue'
+import Address from '../views/Addresses.vue'
+import NewAddress from '../views/Newaddress.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import ProductPage from '../views/ProductPage.vue'
 import Basket from '../views/Basket.vue'
@@ -75,6 +77,22 @@ const routes = [{
         path: '/securitydetails',
         name: 'Security',
         component: Security,
+        meta: {
+            auth: true
+        }
+    },
+    {
+        path: '/addresses',
+        name: 'Address',
+        component: Address,
+        meta: {
+            auth: true
+        }
+    },
+    {
+        path: '/add-address',
+        name: 'NewAddress',
+        component: NewAddress,
         meta: {
             auth: true
         }

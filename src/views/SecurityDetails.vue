@@ -1,9 +1,9 @@
 <template>
     <div class="flex justify-center w-full h-auto">
-        <div class="mt-10 w-1/3 p-4">
+        <div class="mt-10 w-2/3 p-4 expand-container">
             <div class="flex flex-col w-full border-2 p-6">
-                <h1 class="text-2xl">Login Details</h1>
-                <div class="flex flex-row justify-between items-center pb-10 pt-10">
+                <h1 class="text-2xl text-center">Login Details</h1>
+                <div class="flex flex-row justify-between items-center pb-10 pt-10 rearrange">
                     <div class="flex flex-col">
                         <label for="name" class="text-xl font-medium">Username</label>
                         <span>{{ username }}</span>
@@ -12,14 +12,15 @@
                         class="bg-white hover:bg-slate-100 rounded border-2 p-4 w-40 h-8 flex justify-center items-center">Edit</button>
 
                 </div>
-                <div class="hidden flex-row justify-between items-center" :class="{ 'show': !editName }">
+                <div class="hidden flex-row justify-between items-center "
+                    :class="{ 'show': !editName, 'rearrange': !editName }">
 
                     <input type="text" v-model="newName" name="name" id="username" placeholder="name"
                         class="border-2 p-2 rounded-lg" required>
                     <button @click="updateUserName"
                         class="bg-teal-500 text-white hover:bg-teal-700 rounded border-2 p-4 w-30 h-8 flex justify-center items-center">Update</button>
                 </div>
-                <div class="flex flex-row justify-between items-center pb-10 pt-10">
+                <div class="flex flex-row justify-between items-center pb-10 pt-10 rearrange">
                     <div class="flex flex-col">
                         <label for="email" class="text-xl font-medium">Email</label>
                         <span>{{ email }}</span>
@@ -27,7 +28,8 @@
                     <button @click="displayEmailInput"
                         class="bg-white hover:bg-slate-100 rounded border-2 p-4 w-40 h-8 flex justify-center items-center">Edit</button>
                 </div>
-                <div class="hidden flex-row justify-between items-center" :class="{ 'show': !editEmail }">
+                <div class="hidden flex-row justify-between items-center"
+                    :class="{ 'show': !editEmail, 'rearrange': !editEmail }">
 
                     <input type="email" v-model="newEmail" name="email" id="email" placeholder="email"
                         class="border-2 p-2 rounded-lg" required>
@@ -35,7 +37,7 @@
                         class="bg-teal-500 text-white hover:bg-teal-700 rounded border-2 p-4 w-30 h-8 flex justify-center items-center">Update</button>
                 </div>
 
-                <div class="flex flex-row justify-between items-center pb-10 pt-10">
+                <div class="flex flex-row justify-between items-center pb-10 pt-10 rearrange">
                     <div class="flex flex-col">
                         <label for="password" class="text-xl font-medium ">Password</label>
                         <span>********</span>
@@ -43,9 +45,10 @@
                     <button @click="displayPassInput"
                         class="bg-white hover:bg-slate-100 rounded border-2 p-4 w-40 h-8 flex justify-center items-center">Edit</button>
                 </div>
-                <div class="hidden flex-row justify-between items-center" :class="{ 'show': !editPass }">
+                <div class="hidden flex-row justify-between items-center"
+                    :class="{ 'show': !editPass, 'rearrange': !editPass }">
 
-                    <div class="flex flex-col w-full">
+                    <div class="flex flex-col w-full rearrange">
 
 
                         <span v-if="invalidPassword" class="text-red-500 mb-2">Incorrect Password</span>
@@ -122,5 +125,27 @@ const updateUserPass = () => {
     background-color: rgb(187, 139, 139);
     border: none;
     outline: 2px solid red;
+}
+
+@media (max-width: 745px) {
+
+    .rearrange {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+
+
+}
+
+@media (max-width: 626px) {
+
+
+
+    .expand-container {
+        width: 100%;
+        text-align: center;
+    }
 }
 </style>
