@@ -1,8 +1,8 @@
 <template>
   <Navbar v-if="hideNavAndFooter" />
   <router-view @add-to-cart="addToCart" @remove-from-cart="removeFromCart" @decrease-qty="decreaseQty"
-    @increase-qty="increaseQty" @toggle-favourite="toggleFav" :cart="cart" :fav="fav" @update-name="updateName"
-    @update-email="updateEmail" @update-pass="updatePass" :invalidPassword="invalidPassword"
+    @increase-qty="increaseQty" @toggle-favourite="toggleFav" @checkout-items="checkout" :cart="cart" :fav="fav"
+    @update-name="updateName" @update-email="updateEmail" @update-pass="updatePass" :invalidPassword="invalidPassword"
     class="flex-1"></router-view>
   <!-- :cartItemCount="cartItemCount" -->
   <Footer v-if="hideNavAndFooter" class="m-auto" />
@@ -16,18 +16,64 @@ import Footer from './components/Footer.vue';
 // import SignupVerify from './views/SignupVerify.vue';
 // import PageNotFound from './views/PageNotFound.vue';
 import router from './router/router';
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 
 const fav = ref(store.state.wishlist)
 const cart = ref(store.state.cart)
 const invalidPassword = ref(false)
 console.log(typeof (invalidPassword));
 
+// let stripe = null;
+
+// onMounted(async () => {
+//   stripe = Stripe(import.meta.env.VITE_PUBLISHABLE_KEY)
+// })
+
 const hideNavAndFooter = computed(() => {
   const routeName = router.currentRoute.value.name
   return routeName !== 'SignupVerify' && routeName !== 'pagenotfound' && routeName !== 'AccountVerified'
 })
 
+const checkout = async (cart) => {
+  try {
+
+    let productDetails = []
+
+    cart.forEach(element => {
+
+      productDetails.push({
+        user_id: element.user_id,
+        product_id: element.product_id,
+        quantity: element.quantity,
+        img_url: element.img_url
+      })
+
+    });
+
+
+
+    store.dispatch('getCheckoutSession', productDetails).then(async (response) => {
+
+
+      // stripe = await Stripe(import.meta.env.VITE_PUBLISHABLE_KEY)
+
+      const checkout_session = await response
+      const stripe = Stripe(import.meta.env.VITE_PUBLISHABLE_KEY)
+
+      await stripe.redirectToCheckout({
+        sessionId: checkout_session
+      })
+
+      console.log("stripe: ", stripe);
+    })
+
+
+
+  } catch (error) {
+    console.log("Checkout error");
+  }
+
+}
 
 const toggleFav = (product_id) => {
   if (fav.value.includes(product_id)) {
@@ -86,6 +132,10 @@ const decreaseQty = (product) => {
     store.dispatch('decreaseQtyServer', response)
       .then(() => {
 
+        if (product.quantity < 1) {
+          window.location.reload()
+
+        }
       })
   })
 }

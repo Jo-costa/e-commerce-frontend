@@ -9,6 +9,8 @@ import SignupVerify from '../views/SignupVerify.vue'
 // import AccountVerified from '../views/AccountVerified.vue'
 import Profile from '../views/Profile.vue'
 import Orders from '../views/ViewOrders.vue'
+import Success from '../views/Success.vue'
+import OrderFailed from '../views/OrderFailed.vue'
 // import Example from '../views/Example.vue'
 import Security from '../views/SecurityDetails.vue'
 import Address from '../views/Addresses.vue'
@@ -71,6 +73,24 @@ const routes = [{
         component: Orders,
         meta: {
             auth: true
+        }
+    },
+    {
+        path: '/order-confirmed',
+        name: 'OrderConfirmed',
+        component: Success,
+        meta: {
+            auth: false,
+            requiresOrderPlaced: true
+        }
+    },
+    {
+        path: '/order-cancelled',
+        name: 'OrderFailed',
+        component: OrderFailed,
+        meta: {
+            auth: false,
+            requiresOrderPlaced: true
         }
     },
     {

@@ -63,7 +63,7 @@
                     <ul class="flex flex-col">
                         <li v-for="(product, index) in cart" :key="index"><span>Item {{ index + 1 }}- </span> {{
                             product.name
-                        }} <span>({{ product.quantity }})</span></li>
+                            }} <span>({{ product.quantity }})</span></li>
                     </ul>
 
                 </div>
@@ -74,21 +74,11 @@
                             }}</span>
                     </li>
                 </ul>
-                <button type="button"
+                <button @click="checkoutItemsFromCart" type="button"
                     class="mt-6 text-md px-6 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded">Check
                     out</button>
 
-                <div class="mt-10">
-                    <h3 class="text-xl font-extrabold text-[#333] mb-6">Apply promo code</h3>
-                    <div class="flex border border-blue-600 overflow-hidden max-w-md rounded">
-                        <input type="email" placeholder="Promo code"
-                            class="w-full outline-none bg-white text-gray-600 text-md px-4 py-2.5" />
-                        <button type='button'
-                            class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 px-6 text-md text-white">
-                            Apply
-                        </button>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div v-else class="bg-white w-1/2 lg:h-[200px] rounded flex justify-center m-auto mt-12 items-center">
@@ -105,8 +95,9 @@
 </template>
 
 <script setup>
+import { loadStripe } from '@stripe/stripe-js'
 import Layout from '../components/Layout.vue';
-import { defineProps, defineEmits, ref } from 'vue';
+import { defineProps, defineEmits, ref, onMounted } from 'vue';
 import store from '../store/store';
 import { useStore } from 'vuex';
 import Products from '../components/Products.vue';
@@ -114,12 +105,12 @@ const props = defineProps({
     cart: Array,
     toggleFavourite: Function
 })
-const emit = defineEmits(['remove-from-cart', 'increase-qty', 'decrease-qty'])
+const emit = defineEmits(['remove-from-cart', 'increase-qty', 'decrease-qty', 'checkout-items'])
 const use_Store = useStore()
 const cart = ref(store.state.cart)
+console.log(cart.value);
 const products = store.state.products
 const empty = cart.length > 0
-
 
 
 function subTotal() {
@@ -135,6 +126,9 @@ function subTotal() {
     return subTotal;
 }
 
+const checkoutItemsFromCart = () => {
+    emit('checkout-items', cart.value)
+}
 const removeItemFromCart = (product) => {
     emit('remove-from-cart', product)
 }

@@ -17,6 +17,54 @@ export function getProducts({
         return response
     })
 }
+export function order_confirmed({
+    commit
+}) {
+    const order_confirmed_url = window.location.href
+    const parseUrl = new URL(order_confirmed_url)
+    console.log(parseUrl);
+    const url = parseUrl.pathname + parseUrl.search
+    console.log(url);
+
+    return axiosClient.get(url).then(response => {
+
+
+        console.log("response: ", response.data.message);
+
+        commit('setCart', [])
+        return response.data.message
+    })
+}
+
+export function order_failed({
+    commit
+}) {
+    const order_failed_url = window.location.href
+    const parseUrl = new URL(order_failed_url)
+    console.log(parseUrl);
+    const url = parseUrl.pathname + parseUrl.search
+    console.log(url);
+
+    return axiosClient.get(url).then(response => {
+        console.log("response: ", response.data.message);
+
+        return response.data.message
+    })
+}
+
+export function getCheckoutSession({
+    commit
+}, data) {
+    return axiosClient.post('/create-checkout-session', data)
+        .then(({
+            data
+        }) => {
+
+            console.log("data: ", data);
+
+            return data.checkout_session_id
+        })
+}
 
 export function addToCart({
     state
@@ -116,7 +164,6 @@ export function decreaseQty({
     state
 }, product) {
 
-    console.log("asd");
     const products = state.products
     let cart = state.cart
 
