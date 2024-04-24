@@ -4,7 +4,7 @@
             <h2 class="text-4xl font-extrabold text-gray-800 mb-12">Premium Sneakers</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <div v-for="product in products" :key="product.id"
-                    class="bg-white rounded-2xl p-3   transition-all relative">
+                    class="bg-white flex flex-wrap rounded-2xl p-3 relative transition-all w-full">
 
 
                     <div @click="toggleFavourite(product.id)"
@@ -18,17 +18,20 @@
                     </div>
                     <router-link :to="'/product' + product.id">
                         <div
-                            class="w-full h-[220px] cursor-pointer overflow-hidden mx-auto aspect-w-16 aspect-h-8 md:mb-2 mb-4">
+                            class="w-full border-b-2 h-[220px] cursor-pointer overflow-hidden mx-auto aspect-w-16 aspect-h-8 md:mb-2 mb-4">
 
                             <img :src="product.Images[0].img_url" :alt="product.name"
                                 class="h-full w-full object-contain" />
                         </div>
                     </router-link>
-                    <div class="bg-gray-100 p-2">
+                    <div class=" p-1 w-full">
                         <router-link :to="'/product' + product.id">
                             <h3 class="text-lg font-bold cursor-pointer text-gray-800">{{ product.name }}</h3>
                         </router-link>
 
+
+                    </div>
+                    <div class="flex flex-col self-end p-1">
                         <h4 class="text-lg text-gray-700 font-bold mt-4">£{{ product.price }}</h4>
                         <button @click="addItemToCart(product)"
                             class="bg-teal-700 rounded p-1 text-white px-2 hover:bg-teal-800 transition-colors">Add

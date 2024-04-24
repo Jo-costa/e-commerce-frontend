@@ -1,6 +1,9 @@
 export function setProds(state, products) {
     state.products = products
 }
+export function setOrders(state, orders) {
+    state.orders = orders
+}
 
 export function setUsername(state, username) {
     state.user.data.username = username

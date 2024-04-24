@@ -17,6 +17,26 @@ export function getProducts({
         return response
     })
 }
+
+export function getOrders({
+    commit
+}) {
+    const order_confirmed_url = window.location.href
+    const parseUrl = new URL(order_confirmed_url)
+    const url = parseUrl.pathname + parseUrl.search
+    return axiosClient.get(url).then(response => {
+
+
+
+        if (response.data.message) {
+            commit('setOrders', [])
+            return response.data.message
+        }
+
+        commit('setOrders', response.data.orders)
+
+    })
+}
 export function order_confirmed({
     commit
 }) {

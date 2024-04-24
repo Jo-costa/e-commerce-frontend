@@ -30,7 +30,7 @@
                             </MenuItem>
                         </router-link>
 
-                        <router-link :to="{ name: 'Orders' }">
+                        <router-link :to="'/vieworders?user_id=' + user_id">
                             <MenuItem v-slot="{ active }">
 
                             <button :class="[

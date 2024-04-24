@@ -1,9 +1,9 @@
 <template>
   <Navbar v-if="hideNavAndFooter" />
   <router-view @add-to-cart="addToCart" @remove-from-cart="removeFromCart" @decrease-qty="decreaseQty"
-    @increase-qty="increaseQty" @toggle-favourite="toggleFav" @checkout-items="checkout" :cart="cart" :fav="fav"
-    @update-name="updateName" @update-email="updateEmail" @update-pass="updatePass" :invalidPassword="invalidPassword"
-    class="flex-1"></router-view>
+    @increase-qty="increaseQty" @toggle-favourite="toggleFav" @checkout-items="checkout" :products="products"
+    :orders="orders" :cart="cart" :fav="fav" @update-name="updateName" @update-email="updateEmail"
+    @update-pass="updatePass" :invalidPassword="invalidPassword" class="flex-1"></router-view>
   <!-- :cartItemCount="cartItemCount" -->
   <Footer v-if="hideNavAndFooter" class="m-auto" />
 
@@ -20,6 +20,8 @@ import { computed, ref, onMounted } from 'vue'
 
 const fav = ref(store.state.wishlist)
 const cart = ref(store.state.cart)
+const orders = ref(store.state.orders)
+const products = ref(store.state.products)
 const invalidPassword = ref(false)
 console.log(typeof (invalidPassword));
 
@@ -93,6 +95,7 @@ const toggleFav = (product_id) => {
 
 const addToCart = (product) => {
 
+  console.log("typeof:", typeof (product));
   store.dispatch('addToCart', product).then((response) => {
     if (response === 'Out of stock!') {
       return "Out of Stock"

@@ -17,7 +17,8 @@ const store = createStore({
         },
         products: [],
         cart: [],
-        wishlist: []
+        wishlist: [],
+        orders: []
 
     },
     getters,

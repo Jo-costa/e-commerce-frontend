@@ -31,8 +31,7 @@
                     <h2 class="text-2xl font-extrabold text-[#333]">{{ product.name }}</h2>
                     <div class="flex flex-wrap gap-4 mt-6">
                         <p class="text-[#333] text-4xl font-bold">£{{ product.price }}</p>
-                        <p class="text-gray-400 text-xl"><strike>$1500</strike> <span class="text-sm ml-1">Tax
-                                included</span></p>
+
                     </div>
                     <div class="flex space-x-2 mt-4">
                         <svg class="w-5 fill-[#333]" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -58,7 +57,7 @@
                         </svg>
                         <h4 class="text-[#333] text-base">500 Reviews</h4>
                     </div>
-                    <div class="mt-10">
+                    <!-- <div class="mt-10">
                         <h3 class="text-lg font-bold text-gray-800">Choose a Color</h3>
                         <div class="flex flex-wrap gap-4 mt-4">
                             <button type="button"
@@ -70,12 +69,10 @@
                             <button type="button"
                                 class="w-12 h-12 bg-blue-400 border-2 border-white hover:border-gray-800 rounded-full shrink-0"></button>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="flex flex-wrap gap-4 mt-10">
-                        <button type="button"
-                            class="min-w-[200px] px-4 py-3 bg-[#333] hover:bg-[#111] text-white text-sm font-bold rounded">Buy
-                            now</button>
-                        <button type="button"
+
+                        <button @click="addItemToCart" type="button"
                             class="min-w-[200px] px-4 py-2.5 border border-[#333] bg-transparent hover:bg-gray-50 text-[#333] text-sm font-bold rounded">Add
                             to cart</button>
                     </div>
@@ -215,20 +212,25 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-const emit = defineEmits(['toggle-favourite'])
-const props = defineProps({
-    fav: Array,
-    toggleFavourite: Function
-})
 const store = useStore();
 const route = useRoute()
 const productID = Number(route.params.id); //get the product id from the route parameters
-console.log("productid ", typeof (productID));
 
+const emit = defineEmits(['toggle-favourite', 'add-to-cart'])
+const props = defineProps({
+    fav: Array,
+    toggleFavourite: Function,
+    products: Array
+
+})
 
 const product = computed(() => {
     return store.state.products.find(prod => prod.id == productID)
 })
+
+const addItemToCart = () => {
+    emit('add-to-cart', product.value)
+}
     ;
 
 // Sample thumbnails data

@@ -3,17 +3,19 @@
         <div class="mt-10 w-2/3 p-4 expand-container">
             <div class="flex flex-col w-full  p-6">
 
-                <router-link :to="{ name: 'NewAddress' }">
-                    <div
-                        class="border-2 w-40 h-40 cursor-pointer flex flex-col text-center justify-center items-center">
+
+                <div class="border-2 w-40 h-40 cursor-pointer flex flex-col text-center justify-center items-center">
+                    <router-link :to="{ name: 'NewAddress' }"
+                        class="flex flex-col text-center justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
 
                         <span>Add new Address</span>
-                    </div>
-                </router-link>
+                    </router-link>
+                </div>
+
 
             </div>
         </div>
