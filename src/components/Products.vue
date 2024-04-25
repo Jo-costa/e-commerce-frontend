@@ -1,7 +1,7 @@
 <template>
-    <div class="font-[sans-serif] bg-gray-100 z-{-50]">
+    <div class="font-[sans-serif] bg-gray-100 m-auto">
         <div class="p-4 mx-auto lg:max-w-7xl sm:max-w-full">
-            <h2 class="text-4xl font-extrabold text-gray-800 mb-12">Premium Sneakers</h2>
+            <h2 class="font-extrabold text-gray-800 mb-12 text-xl md:text-2xl lg:text-4xl">Premium Devices</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <div v-for="product in products" :key="product.id"
                     class="bg-white flex flex-wrap rounded-2xl p-3 relative transition-all w-full">

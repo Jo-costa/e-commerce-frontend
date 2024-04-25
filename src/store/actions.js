@@ -6,6 +6,8 @@ export function getProducts({
 }) {
     return axiosClient.get('/products').then(response => {
 
+
+        console.log(response.data);
         commit('setProds', response.data)
         if (response.data.prods) {
             commit('setProds', response.data.prods)
@@ -16,6 +18,12 @@ export function getProducts({
 
         return response
     })
+}
+
+export function getCartProds({
+    commit
+}, data) {
+    return axiosClient.post('/cart')
 }
 
 export function getOrders({

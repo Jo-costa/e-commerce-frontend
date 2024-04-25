@@ -56,7 +56,6 @@ onMounted(async () => {
     store.dispatch('getOrders').then(response => {
 
         message.value = response
-        console.log(message);
     })
 
         .catch(error => {

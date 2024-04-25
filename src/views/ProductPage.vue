@@ -5,9 +5,9 @@
                 class="grid items-start grid-cols-1 lg:grid-cols-5 gap-12 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
                 <div class="lg:col-span-3 w-full lg:sticky top-0 text-center">
                     <!-- Main product image -->
-                    <div class="z-10 px-4 py-10 rounded-xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative">
-                        <img :src="product.Images[0].img_url" alt=""
-                            class="w-full z-10 max-h-96	rounded object-cover" />
+                    <div
+                        class="flex justify-center z-10 px-4 py-10 rounded-xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative">
+                        <img :src="product.Images[0].img_url" alt="" class="z-10 max-h-96	rounded object-cover" />
                         <div @click="toggleFavourite(productID)"
                             class="z-10 bg-gray-100  w-10 h-10 flex hover:-translate-y-0.5 items-center justify-center rounded-full cursor-pointer absolute top-4 right-4"
                             :class="{ 'fill-gray-800': !props.fav.includes(product.id), 'fill-red': props.fav.includes(product.id) }">

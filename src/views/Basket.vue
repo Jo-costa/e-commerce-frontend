@@ -2,12 +2,12 @@
     <!-- <Layout class="w-full"> -->
 
     <div class="font-[sans-serif] bg-gray-100">
-        <div class=" flex justify-between  gap-12 p-20" v-if="cart.length > 0">
-            <div class="w-2/2">
+        <div class=" rearrange flex justify-between  gap-12 p-20 increaseSize" v-if="cart.length > 0">
+            <div class="w-2/2 increaseSize">
                 <div class="lg:col-span-2 divide-y w-full h-auto" v-for="(product, index) in cart " :key="index">
 
-                    <div class="grid md:grid-cols-4 items-center gap-8 py-6 bg-white p-2">
-                        <div class="md:col-span-2 flex items-center gap-6">
+                    <div class="rearrange  grid md:grid-cols-4 items-center gap-8 py-6 bg-white p-2">
+                        <div class="rearrange  gap-6">
                             <div class="w-32 h-22 shrink-0 shadow-[0_0px_4px_0px_rgba(6,81,237,0.2)] p-4">
                                 <img :src="product.img_url" class="w-full h-full object-contain rounded-md" />
                             </div>
@@ -17,7 +17,7 @@
                                 <h6 class="text-md text-gray-500 mt-2">Color: <strong class="ml-2">Black</strong></h6>
                             </div>
                         </div>
-                        <div class="flex">
+                        <div class="flex ">
                             <button @click="decreaseItemQty(product)" type="button"
                                 class="bg-transparent py-2 font-semibold text-[#333]">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-current" viewBox="0 0 124 124">
@@ -39,11 +39,11 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="flex items-center">
+                        <div class="flex items-center justify-between w-1/2">
                             <h4 class="text-lg font-bold text-[#333]">£{{ product.price }}
                             </h4>
                             <svg @click="removeItemFromCart(product)" xmlns="http://www.w3.org/2000/svg"
-                                class="w-3 cursor-pointer shrink-0 fill-[#333] hover:fill-red-500 ml-auto"
+                                class="w-3 m-2 cursor-pointer shrink-0 fill-[#333] hover:fill-red-500 ml-auto"
                                 viewBox="0 0 320.591 320.591">
                                 <path
                                     d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
@@ -74,11 +74,18 @@
                             }}</span>
                     </li>
                 </ul>
-                <button @click="checkoutItemsFromCart" type="button"
-                    class="mt-6 text-md px-6 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded">Check
+                <button v-if="store.state.user.token" @click="checkoutItemsFromCart" type="button"
+                    class="mt-6 text-md px-6 py-2.5 w-full bg-green-600 hover:bg-green-700 text-white rounded">Check
                     out</button>
 
 
+                <button v-else disabled type="button"
+                    class="mt-6 text-md px-6 py-2.5 w-full bg-green-500 opacity-85 text-white rounded">Check
+                    out</button>
+                <div v-if="!store.state.user.token" class="flex flex-col">
+                    <span> {{ message }}</span>
+                    <router-link class="text-black" :to="{ name: 'Login' }">Login</router-link>
+                </div>
             </div>
         </div>
         <div v-else class="bg-white w-1/2 lg:h-[200px] rounded flex justify-center m-auto mt-12 items-center">
@@ -111,7 +118,7 @@ const cart = ref(store.state.cart)
 console.log(cart.value);
 const products = store.state.products
 const empty = cart.length > 0
-
+let message = ref('Please Login to your account to proceed with the checkout')
 
 function subTotal() {
     let subTotal = 0
@@ -139,4 +146,32 @@ const decreaseItemQty = (product) => {
     emit('decrease-qty', product)
 }
 
+// onMounted(async () => {
+
+//     store.dispatch('getCartProds', { 'user_id': store.state.user.data.id }).then(response => {
+//     })
+
+//         .catch(error => {
+//             console.log('Error: ', error);
+//         })
+// })
+
 </script>
+<style>
+@media (max-width: 670px) {
+    .rearrange {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+}
+
+@media (max-width: 768px) {
+
+
+    .increaseSize {
+        width: 100%;
+    }
+}
+</style>
